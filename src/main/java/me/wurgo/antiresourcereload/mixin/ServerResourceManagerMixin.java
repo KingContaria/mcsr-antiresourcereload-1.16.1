@@ -18,7 +18,7 @@ public abstract class ServerResourceManagerMixin {
     )
     private void keepCachedResourcesOpen(CallbackInfo ci) throws ExecutionException, InterruptedException {
         // noinspection ConstantConditions - I think mixin is confusing for intellij here
-        if (AntiResourceReload.cache == null || (Object) this != AntiResourceReload.cache.get()) {
+        if (AntiResourceReload.cache != null && (Object) this == AntiResourceReload.cache.get()) {
             ci.cancel();
         }
     }
