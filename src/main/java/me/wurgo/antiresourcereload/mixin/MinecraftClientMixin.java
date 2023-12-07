@@ -12,7 +12,9 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.tag.ItemTags;
+import net.minecraft.util.profiler.Profiler;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.List;
@@ -22,6 +24,9 @@ import java.util.concurrent.Executor;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
+
+    @Shadow
+    private Profiler profiler;
 
     @WrapOperation(
             method = "method_29604",
@@ -39,9 +44,10 @@ public abstract class MinecraftClientMixin {
         } else {
             AntiResourceReload.log("Using cached server resources.");
             if (AntiResourceReload.hasSeenRecipes) {
-                ((RecipeManagerAccess) AntiResourceReload.cache.get().getRecipeManager()).invokeApply(AntiResourceReload.recipes, null, null);
+                ServerResourceManager manager = AntiResourceReload.cache.get();
+                ((RecipeManagerAccess) manager.getRecipeManager()).invokeApply(AntiResourceReload.recipes, manager.getResourceManager(), this.profiler);
+                AntiResourceReload.hasSeenRecipes = false;
             }
-            AntiResourceReload.hasSeenRecipes = false;
             return AntiResourceReload.cache;
         }
 
