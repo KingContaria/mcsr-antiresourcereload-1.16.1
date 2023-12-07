@@ -1,8 +1,6 @@
 package me.wurgo.antiresourcereload;
 
 import com.google.gson.JsonElement;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resource.ServerResourceManager;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
