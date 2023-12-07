@@ -18,7 +18,7 @@
     "homepage": "https://github.com/wurgo"
   },
   "license": "MIT",
-  "environment": "*",
+  "environment": "client",
   "mixins": [
     "antiresourcereload.mixins.json"
   ],
@@ -28,7 +28,8 @@
     ]
   },
   "depends": {
-    "minecraft": ">=1.16 <=1.16.1"
+    "minecraft": ">=1.16 <=1.16.1",
+    "fabricloader": ">=0.15.0"
   },
   "breaks": {
     "speedrunigt": "<7.2"
