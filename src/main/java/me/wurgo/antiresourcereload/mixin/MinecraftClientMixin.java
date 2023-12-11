@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.stream.Collectors;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
@@ -36,7 +37,7 @@ public abstract class MinecraftClientMixin {
             )
     )
     private CompletableFuture<ServerResourceManager> cachedReload(List<ResourcePack> dataPacks, CommandManager.RegistrationEnvironment registrationEnvironment, int i, Executor executor, Executor executor2, Operation<CompletableFuture<ServerResourceManager>> original, @Local ResourcePackManager<ResourcePackProfile> resourcePackManager) throws ExecutionException, InterruptedException {
-        boolean usingDataPacks = !resourcePackManager.getEnabledProfiles().stream().map(ResourcePackProfile::getName).toList().equals(DataPackSettings.SAFE_MODE.getEnabled());
+        boolean usingDataPacks = !resourcePackManager.getEnabledProfiles().stream().map(ResourcePackProfile::getName).collect(Collectors.toList()).equals(DataPackSettings.SAFE_MODE.getEnabled());
         if (usingDataPacks) {
             AntiResourceReload.log("Using data-packs, reloading.");
         } else if (AntiResourceReload.cache == null) {
