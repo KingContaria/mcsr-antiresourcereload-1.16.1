@@ -44,7 +44,9 @@ public abstract class MinecraftClientMixin {
             AntiResourceReload.log("Cached resources unavailable, reloading & caching.");
         } else {
             AntiResourceReload.log("Using cached server resources.");
-            if (AntiResourceReload.hasSeenRecipes) {
+            // only reload recipes on the main thread
+            // this is for compat with seedqueue creating servers in the background
+            if (MinecraftClient.getInstance().isOnThread() && AntiResourceReload.hasSeenRecipes) {
                 ServerResourceManager manager = AntiResourceReload.cache.get();
                 ((RecipeManagerAccess) manager.getRecipeManager()).invokeApply(AntiResourceReload.recipes, manager.getResourceManager(), this.profiler);
                 AntiResourceReload.hasSeenRecipes = false;
