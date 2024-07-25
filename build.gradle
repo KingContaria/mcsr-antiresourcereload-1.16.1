@@ -4,11 +4,8 @@ plugins {
 	id 'org.ajoberstar.grgit' version '4.1.0'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-archivesBaseName = "${project.mod_id}-${project.supported_versions}"
-version = project.mod_version
+archivesBaseName = project.mod_id
+version = "${project.mod_version}+${project.supported_versions}"
 group = project.maven_group
 
 repositories {
@@ -46,6 +43,9 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
 	// If you remove this line, sources will not be generated.
