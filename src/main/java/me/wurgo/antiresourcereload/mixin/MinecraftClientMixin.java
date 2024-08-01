@@ -30,7 +30,7 @@ public abstract class MinecraftClientMixin {
     private Profiler profiler;
 
     @WrapOperation(
-            method = "method_29604",
+            method = "createIntegratedResourceManager",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/resource/ServerResourceManager;reload(Ljava/util/List;Lnet/minecraft/server/command/CommandManager$RegistrationEnvironment;ILjava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;"
